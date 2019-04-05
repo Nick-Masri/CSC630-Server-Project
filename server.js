@@ -30,8 +30,8 @@ var knex = require('knex')({
   connection: {
     host: 'localhost',
     user: 'postgres',
-    password: 'nick123',
-    database: 'project1'
+    password: 'Poopie2001',
+    database: 'addressassigner'
   }
 });
 //Setting up pg
@@ -123,6 +123,7 @@ app.get("/address_tb", function(req, res) {
 
 
 //////////////// Users ////////////////
+
 // Allow Creation of Users
 app.post("/user/create", function(req, res) {
   knex('address_tb').insert({
@@ -148,10 +149,10 @@ app.post("/user/update", function(req, res) {
 });
 
 //Delete User
-app.post("/address/delete", function(req, res) knex('address_tb').where("user_id", "=", req.body.userId).del().then(function() {
-  res.status(200).send('Succesfully Deleted Entry in Users Table');
-})
-});
+// app.post("/address/delete", function(req, res) knex('address_tb').where("user_id", "=", req.body.userId).del().then(function() {
+//   res.status(200).send('Succesfully Deleted Entry in Users Table');
+// })
+// });
 
 // Returns a JSON list of a single userIdRef
 app.get("/user/:username", function(req, res) {
