@@ -71,29 +71,20 @@ knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if
 ////////////////////////////////////////////////////// Routing ////////////////////////////////////////////////////
 
 app.get('/', function(req, res) {
-  res.send('<p>Welcome to the homepage for project 1. [Insert links to DB]</p>')
+  res.send('<p>Welcome to the homepage for project 1. <a href= "/addresses">View Address Database</a> [Insert links to DB]</p>')
 })
 
 //////////////// Addresses ////////////////
 // Allow Creation of Addresses
 app.post("/address/create", function(req, res) {
   geocoder.geocode(req.body.address, function(err, result) {
-    knex('address_tb').insert([{
-        address: req.body.address
-      },
-      {
-        address_name: req.body.addressName
-      },
-      {
-        user_id_ref: req.body.userIdRef
-      },
-      {
-        lat: result[0]['latitude']
-      },
-      {
-        long: result[0]['longitude']
-      }
-    ]).then(function() {
+    knex('address_tb').insert({
+      address: req.body.address,
+      address_name: req.body.addressName,
+      user_id_ref: req.body.userIdRef,
+      long: result[0]['longitude'],
+      lat: result[0]['latitude']
+    }).then(function() {
       res.status(200).send('Succesfully Created Entry in Addresses Table');
     })
   });
@@ -102,22 +93,13 @@ app.post("/address/create", function(req, res) {
 // Update address
 app.post("/address/update", function(req, res) {
   geocoder.geocode(req.body.address, function(err, result) {
-      knex('address_tb').where("address_id", "=", req.body.addressID).update([{
-          address: req.body.address
-        },
-        {
-          lat: result[0]['latitude']
-        },
-        {
-          long: result[0]['longitude']
-        },
-        {
-          user_id_ref: req.body.userIdRef
-        },
-        {
-          address_name: req.body.addressName
-        }
-      }]).then(function() {
+    knex('address_tb').where("address_id", "=", req.body.addressID).update({
+      address: req.body.address,
+      address_name: req.body.addressName,
+      user_id_ref: req.body.userIdRef,
+      long: result[0]['longitude'],
+      lat: result[0]['latitude']
+    }).then(function() {
       res.status(200).send('Succesfully Updated Entry in Addresses Table');
     })
   });
@@ -131,8 +113,8 @@ app.post("/address/delete", function(req, res) {
 });
 
 // Returns a JSON list of all addresses
-app.get("/addresses", function(req, res) {
-  knex.select().table('address_tb').then(function() {
+app.get("/address_tb", function(req, res) {
+  knex.select().table('address_tb').then(function(result) {
     res.json(result.rows);
   })
 });
