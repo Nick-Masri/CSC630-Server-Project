@@ -166,6 +166,6 @@ app.get("/user_tb", function(req, res) {
   res.json(table.rows)
 });
 
-app.listen(port, function() {
+app.listen(process.env.PORT || port, function() {
   console.log(`Example app listening on port ${port}!`)
 })
