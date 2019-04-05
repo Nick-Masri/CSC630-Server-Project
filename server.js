@@ -111,6 +111,7 @@ app.post("/address/update", function(req, res) {
 
 //Delete address
 app.delete("/address/delete", function(req, res) {
+  console.log(knex('address_tb').where("address_id", "=", req.body.addressID).del())
   knex('address_tb').where("address_id", "=", req.body.addressID).del().then(function() {
     res.status(200).send('Succesfully Deleted Entry in Addresses Table');
   })
@@ -177,8 +178,6 @@ app.get("/users_tb", function(req, res) {
 //
 //       });
 //
-
-
 app.listen(process.env.PORT || port, function() {
   console.log(`App listening on port ${port}!`)
 })
