@@ -13,13 +13,13 @@ var nodeGeoCoder = require('node-geocoder'); // https://www.npmjs.com/package/no
 
 var geocoder = nodeGeoCoder({
   provider: 'google',
-  apiKey: 'AIzaSyCZAf308qLzlbq4JTsYWeL4NVBc4joHwnk',
+  apiKey: 'AIzaSyCZAf308qLzlbq4JTsYWeL4NVBc4joHwnk'
 });
 
 //Setting up bodyparser, from: https://medium.com/@adamzerner/how-bodyparser-works-247897a93b90
 var bodyParser = require('body-parser');
 
-app.use(bodyParser());
+app.use(bodyParser.json())
 
 //Setting up knex
 var knex = require('knex')({
@@ -45,13 +45,13 @@ async function connect() {
 knex.schema.hasTable('address_tb').then(function(exists) { // Creates the table if it doesn't exists
   if (!exists) {
     return knex.schema.createTable('address_tb', function(table) {
-      console.log("create address table");
+      console.log("created address table");
       table.increments('address_id'); // Creates 'id' column on table
       table.string('address_name');
       table.string('address');
       table.string('user_id_ref');
-      table.integer('long');
-      table.integer('lat');
+      table.string('long');
+      table.string('lat');
     });
   }
 });
@@ -59,12 +59,12 @@ knex.schema.hasTable('address_tb').then(function(exists) { // Creates the table 
 knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if it doesn't exists
   if (!exists) {
     return knex.schema.createTable('users_tb', function(table) {
-      console.log("create user table");
+      console.log("Created user table");
       table.increments('user_id'); // Creates 'id' column on table
       table.string('display_name');
       table.string('username');
-      table.integer('long');
-      table.integer('lat');
+      table.string('long');
+      table.string('lat');
     });
   }
 });
@@ -86,8 +86,9 @@ app.get('/:name/poi', function(req, res) {
 //   console.log(req.forms)
 // });
 
+
+
 app.post("/address/create", function(req, res) {
-  console.log(req)
   geocoder.geocode(req.body.address, function(err, result) {
     knex('address_tb').insert([{
         address: req.body.address
@@ -99,10 +100,10 @@ app.post("/address/create", function(req, res) {
         user_id_ref: req.body.userIdRef
       },
       {
-        lat: result[0]
+        lat: result[0]['latitude']
       },
       {
-        long: result[1]
+        long: result[0]['longitude']
       }
     ]).then(function() {
       res.status(200).send('Succesfully Created Entry in Addresses Table');
