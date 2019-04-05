@@ -110,7 +110,7 @@ app.post("/address/update", function(req, res) {
 });
 
 //Delete address
-app.post("/address/delete", function(req, res) {
+app.delete("/address/delete", function(req, res) {
   knex('address_tb').where("address_id", "=", req.body.addressID).del().then(function() {
     res.status(200).send('Succesfully Deleted Entry in Addresses Table');
   })
@@ -150,7 +150,7 @@ app.post("/user/update", function(req, res) {
 });
 
 //Delete User
-app.post("/user/delete", function(req, res) {
+app.delete("/user/delete", function(req, res) {
   knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
     res.status(200).send('Succesfully Deleted Entry in Users Table');
     })
