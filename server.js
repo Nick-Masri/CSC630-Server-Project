@@ -91,7 +91,7 @@ app.post("/address/create", function(req, res) {
     }).then(function() {
       res.status(200).send('Succesfully Created Entry in Addresses Table');
     })
-  });
+  })
 });
 
 // Update address
@@ -106,7 +106,7 @@ app.post("/address/update", function(req, res) {
     }).then(function() {
       res.status(200).send('Succesfully Updated Entry in Addresses Table');
     })
-  });
+  })
 });
 
 //Delete address
@@ -150,9 +150,10 @@ app.post("/user/update", function(req, res) {
 });
 
 //Delete User
-app.post("/user/delete", function(req, res) knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
-  res.status(200).send("Succesfully Deleted Entry in Users Table");
-})
+app.post("/user/delete", function(req, res) {
+  knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
+    res.status(200).send('Succesfully Deleted Entry in Users Table');
+  })
 });
 
 // Returns a JSON list of a single userIdRef
@@ -163,6 +164,8 @@ app.get("/user/:username", function(req, res) {
 
 // Returns a JSON list of all users
 app.get("/users_tb", function(req, res) {
+  <<
+  << << < HEAD
   knex.select().table("users_tb").then(function(table) {
     res.json(table.rows)
   })
@@ -170,13 +173,9 @@ app.get("/users_tb", function(req, res) {
 
 // Returns a JSON list of all the addresses of the specified users
 app.get("/:username/poi", functon(req, res) {
-  var table = knex.select('users_tb.user_name', 'address_tb.address_name').innerJoin(
-    (knex.select('user_name', 'user_id').from('users_tb').where(req.params.username, 'users_tb.user_name')) names,
-    "names.user_id", "address_tb.user_id_ref")
-  res.json(table.rows)
-});
-
-// Listen on port
-app.listen(process.env.PORT || port, function() {
-  console.log(`App listening on port ${port}!`)
-})
+      var table = knex.select('users_tb.user_name', 'address_tb.address_name').innerJoin(
+          (knex.select('user_name', 'user_id').from('users_tb').where(req.params.username, 'users_tb.user_name')) names,
+          "names.user_id", "address_tb.user_id_ref" // Listen on port
+          app.listen(process.env.PORT || port, function() {
+            console.log(`App listening on port ${port}!`)
+          })
