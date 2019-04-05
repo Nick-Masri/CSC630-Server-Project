@@ -84,11 +84,19 @@ curl --header "Content-Type: application/json" \
 ```
 
 ### DELETING
-To delete entries, follow the example code below.
+To delete user entries, follow the example code below.
 
 ```
 curl --header "Content-Type: application/json" \
     --request DELETE \
-    --data '{"user_id": 1}' \
+    --data '{"userId": 1}' \
     /address/delete
+```
+To delete address information, follow the example code below.
+
+```
+curl --header "Content-Type: application/json" \
+    --request DELETE \
+    --data '{"userId": 1}' \
+    /user/delete
 ```
