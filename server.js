@@ -74,7 +74,7 @@ knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if
 ////////////////////////////////////////////////////// Routing ////////////////////////////////////////////////////
 
 app.get('/', function(req, res) {
-  res.send('<p>Welcome to the homepage for project 1. <a href= "/address_tb">View Address Database</a> [Insert links to DB]</p>')
+  res.send('<p>Welcome to the homepage for project 1. <a href= "/address_tb">View Address Database</a>  <a href= "/users_tb">View Useds Database</a></p>')
 })
 
 //////////////// Addresses ////////////////
