@@ -28,10 +28,10 @@ app.use(bodyParser.json())
 var knex = require('knex')({
   client: 'pg',
   connection: {
-    host: 'localhost',
-    user: 'postgres',
-    password: 'PASSWORD',
-    database: 'addressassigner'
+    host: 'ec2-54-83-61-142.compute-1.amazonaws.com',
+    user: 'tsnaczvmpvpzcf',
+    password: 'e282b333628a84cf0bf40e09e8aac7205f8222b6d09ad0d0ba5a076f7c34f28b',
+    database: 'dfi4e39vngk2b5'
   }
 });
 //Setting up pg
