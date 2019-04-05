@@ -35,6 +35,7 @@ var knex = require("knex")({
     database: "dfi4e39vngk2b5"
   }
 });
+
 //Setting up pg
 const {
   Client
