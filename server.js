@@ -1,6 +1,7 @@
 /*
 Authors: Nicholas Masri and Nalu Concepcion
-For this project, we are using express for the server, knex to write the sql code in js, and psql for the database
+For this project, we are using express for the server,
+knex to write the sql code in js, and psql for the database
 */
 
 // Camel Case user inputs, snake case column names
