@@ -170,10 +170,15 @@ app.get("/users_tb", function(req, res) {
 });
 
 // Returns a JSON list of all the addresses of the specified users
-app.get("/:username/poi", functon(req, res) {
-      var table = knex.select('users_tb.user_name', 'address_tb.address_name').innerJoin(
-          (knex.select('user_name', 'user_id').from('users_tb').where(req.params.username, 'users_tb.user_name')) names,
-          "names.user_id", "address_tb.user_id_ref" // Listen on port
-          app.listen(process.env.PORT || port, function() {
-            console.log(`App listening on port ${port}!`)
-          })
+// app.get("/:username/poi", functon(req, res) {
+//       var table = knex.select('users_tb.user_name', 'address_tb.address_name').innerJoin(
+//         (knex.select('user_name', 'user_id').from('users_tb').where(req.params.username, 'users_tb.user_name')) names,
+//         "names.user_id", "address_tb.user_id_ref" // Listen on port
+//
+//       });
+//
+
+
+app.listen(process.env.PORT || port, function() {
+  console.log(`App listening on port ${port}!`)
+})
