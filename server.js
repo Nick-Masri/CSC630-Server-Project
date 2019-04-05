@@ -91,7 +91,7 @@ app.post("/address/create", function(req, res) {
     }).then(function() {
       res.status(200).send('Succesfully Created Entry in Addresses Table');
     })
-  });
+  })
 });
 
 // Update address
@@ -106,7 +106,7 @@ app.post("/address/update", function(req, res) {
     }).then(function() {
       res.status(200).send('Succesfully Updated Entry in Addresses Table');
     })
-  });
+  })
 });
 
 //Delete address
