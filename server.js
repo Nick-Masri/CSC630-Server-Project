@@ -54,8 +54,8 @@ knex.schema.hasTable('address_tb').then(function(exists) { // Creates the table 
       table.string('address_name');
       table.string('address');
       table.string('user_id_ref');
-      table.string('long');
-      table.string('lat');
+      table.decimal('long', 9, 6);
+      table.decimal('lat', 9, 6);
     });
   }
 });
@@ -67,8 +67,8 @@ knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if
       table.increments('user_id'); // Creates 'id' column on table
       table.string('display_name');
       table.string('user_name');
-      table.string('long');
-      table.string('lat');
+      table.decimal('long', 9, 6);
+      table.decimal('lat', 9, 6);
     });
   }
 });
@@ -167,6 +167,8 @@ app.get("/user_tb", function(req, res) {
   res.json(table.rows)
 });
 
+
+// Listen on port
 app.listen(process.env.PORT || port, function() {
-  console.log(`Example app listening on port ${port}!`)
+  console.log(`App listening on port ${port}!`)
 })
