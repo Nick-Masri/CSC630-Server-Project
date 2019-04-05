@@ -125,7 +125,7 @@ app.get("/address_tb", function(req, res) {
 //////////////// Users ////////////////
 // Allow Creation of Users
 app.post("/user/create", function(req, res) {
-  knex('address_tb').insert({
+  knex('users_tb').insert({
     display_name: req.body.displayName,
     user_name: req.body.userName,
     long: req.body.long,
@@ -137,7 +137,7 @@ app.post("/user/create", function(req, res) {
 
 // Update User
 app.post("/user/update", function(req, res) {
-  knex('address_tb').where("user_id", "=", req.body.userId).update({
+  knex('users_Tb').where("user_id", "=", req.body.userId).update({
     display_name: req.body.displayName,
     user_name: req.body.userName,
     long: req.body.long,
@@ -148,7 +148,7 @@ app.post("/user/update", function(req, res) {
 });
 
 //Delete User
-app.post("/address/delete", function(req, res) knex('address_tb').where("user_id", "=", req.body.userId).del().then(function() {
+app.post("/user/delete", function(req, res) knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
   res.status(200).send('Succesfully Deleted Entry in Users Table');
 })
 });
