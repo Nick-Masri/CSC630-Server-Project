@@ -2,6 +2,10 @@
 Authors: Nicholas Masri and Nalu Concepcion
 For this project, we are using express for the server, knex to write the sql code in js, and psql for the database
 */
+
+
+// Camel Case user inputs, snake case column names
+// Ex: userName, user_name
 ////////////////////////////////////////////////////// SETUP ////////////////////////////////////////////////////
 // Setting up express
 const express = require('express')
@@ -62,7 +66,7 @@ knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if
       console.log("Created user table");
       table.increments('user_id'); // Creates 'id' column on table
       table.string('display_name');
-      table.string('username');
+      table.string('user_name');
       table.string('long');
       table.string('lat');
     });
@@ -71,7 +75,7 @@ knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if
 ////////////////////////////////////////////////////// Routing ////////////////////////////////////////////////////
 
 app.get('/', function(req, res) {
-  res.send('<p>Welcome to the homepage for project 1. <a href= "/addresses">View Address Database</a> [Insert links to DB]</p>')
+  res.send('<p>Welcome to the homepage for project 1. <a href= "/address_tb">View Address Database</a> [Insert links to DB]</p>')
 })
 
 //////////////// Addresses ////////////////
@@ -114,58 +118,53 @@ app.post("/address/delete", function(req, res) {
 
 // Returns a JSON list of all addresses
 app.get("/address_tb", function(req, res) {
-  knex.select().table('address_tb').then(function(result) {
-    res.json(result.rows);
+  var table = knex.select().table('address_tb')
+  res.json(table.rows)
+});
+
+
+//////////////// Users ////////////////
+// Allow Creation of Users
+app.post("/user/create", function(req, res) {
+  knex('address_tb').insert({
+    display_name: req.body.displayName,
+    user_name: req.body.userName,
+    long: req.body.long,
+    lat: req.body.lat
+  }).then(function() {
+    res.status(200).send('Succesfully Created Entry in Users Table');
   })
 });
 
-//
-// // ** CRUD Users **
-//
-// // Creates a User
-// app.post("/user/create", function(req, res) {
-//   client.query(`INSERT INTO Users (DisplayName,UserName,Lat,Long) VALUES ('${req.body.displayName}','${req.body.userName}',${req.body.lat},${req.body.long});`, function(err, result) {
-//     console.log("Created USER");
-//     res.sendStatus(200);
-//   });
-// });
-//
-// // Updates a User
-// app.post("/user/update", function(req, res) {
-//   client.query(
-//     `UPDATE Users
-//     SET DisplayName = '${req.body.displayName}', UserName = '${req.body.userName}', Lat = ${req.body.lat}, Long = ${req.body.long}
-//     WHERE UserID = ${req.body.userID};`,
-//     function(err, result) {
-//       console.log("Updated USER");
-//       res.sendStatus(200);
-//     });
-// });
-//
-// // Deletes a User
-// app.post("/user/delete", function(req, res) {
-//   client.query(
-//     `DELETE FROM Users
-//     WHERE UserID = '${req.body.userID}';`,
-//     function(err, result) {
-//       console.log("Deleted USER");
-//       res.sendStatus(200);
-//     });
-// });
-//
-// // Gets a User
-// app.get("/user/:username", function(req, res) {
-//   client.query(`SELECT * FROM Users WHERE Users.UserName='${req.params.username}'`, function(err, result) {
-//     res.json(result.rows); // Return result of SQL query
-//   });
-// });
-//
-// // Gets all Users
-// app.get("/user_table", function(req, res) {
-//   client.query("SELECT * FROM Users", function(err, result) {
-//     res.json(result.rows); // Return result of SQL query
-//   });
-// });
+// Update User
+app.post("/user/update", function(req, res) {
+  knex('address_tb').where("user_id", "=", req.body.userId).update({
+    display_name: req.body.displayName,
+    user_name: req.body.userName,
+    long: req.body.long,
+    lat: req.body.lat
+  }).then(function() {
+    res.status(200).send('Succesfully Updated Entry in Users Table');
+  })
+});
+
+//Delete User
+app.post("/address/delete", function(req, res) knex('address_tb').where("user_id", "=", req.body.userId).del().then(function() {
+  res.status(200).send('Succesfully Deleted Entry in Users Table');
+})
+});
+
+// Returns a JSON list of a single userIdRef
+app.get("/user/:username", function(req, res) {
+  var table = knex.select().table('users_tb')
+  res.json(table.rows)
+});
+
+// Returns a JSON list of all users
+app.get("/user_tb", function(req, res) {
+  var table = knex.select().table('users_tb')
+  res.json(table.rows)
+});
 
 app.listen(port, function() {
   console.log(`Example app listening on port ${port}!`)
