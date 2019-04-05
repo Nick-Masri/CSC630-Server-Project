@@ -154,6 +154,7 @@ app.post("/user/delete", function(req, res) {
   knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
     res.status(200).send('Succesfully Deleted Entry in Users Table');
     })
+    console.log(req.body.userId);
 });
 
 // Returns a JSON list of a single userIdRef
@@ -165,6 +166,7 @@ app.get("/user/:username", function(req, res) {
 // Returns a JSON list of all users
 app.get("/users_tb", function(req, res) {
   var table = knex.select().table('users_tb')
+  console.log(knex.select().table);
   res.json(table.rows)
 });
 
