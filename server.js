@@ -82,12 +82,7 @@ app.get('/:name/poi', function(req, res) {
 //////////////// Addresses ////////////////
 // Create request for address table
 
-// app.post("/address/create", function(req, res) {
-//   console.log(req.forms)
-// });
-
-
-
+// Allow Creation of Addresses
 app.post("/address/create", function(req, res) {
   geocoder.geocode(req.body.address, function(err, result) {
     knex('address_tb').insert([{
