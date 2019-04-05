@@ -33,7 +33,7 @@ To see the entire user database, navigate to
 ```
 To see all users in the database, navigate to
 ```
-/user_tb
+/users_tb
 ```
 To see information about a single user in the database, navigate to
 ```
@@ -59,7 +59,7 @@ To assign users addresses, execute the following command, again adapting the par
 ```
 curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{"address":"18 Old Campus Road", "address_name:"Dorm", "user_id_ref":2, "long":2, "lat":2}' \
+    --data '{"address":"18 Old Campus Road", "addressName:"Dorm", "userIdRef":2, "long":2, "lat":2}' \
     /address/create
 ```
 
@@ -70,7 +70,7 @@ To update a user entry (rather than creating one), follow the example code below
 ```
 curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{"user_id":2, "displayName":"John Doe","userName":"johndoe88", "long": 2, "lat": 2' \
+    --data '{"userId":2, "displayName":"John Doe","userName":"johndoe88", "long": 2, "lat": 2' \
     /user/update
 ```
 
@@ -79,7 +79,7 @@ To update an address entry, follow the example code below.
 ```
 curl --header "Content-Type: application/json" \
     --request POST \
-    --data '{"user_id":2, "address":"18 Old Campus Road", "address_name:"Dorm", "user_id_ref":2, "long":2, "lat":2}' \
+    --data '{"userId":2, "address":"18 Old Campus Road", "address_name:"Dorm", "user_id_ref":2, "long":2, "lat":2}' \
     /adress/update
 ```
 
