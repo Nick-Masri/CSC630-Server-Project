@@ -30,7 +30,7 @@ var knex = require('knex')({
   connection: {
     host: 'localhost',
     user: 'postgres',
-    password: 'Poopie2001',
+    password: 'PASSWORD',
     database: 'addressassigner'
   }
 });
