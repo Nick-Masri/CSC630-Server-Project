@@ -23,7 +23,7 @@ node server.js
 ## HTTP Requests
 
 ### GETTING
-To pull information down from the server, simply navigate to the server at
+Home Page
 ```
 /
 ```

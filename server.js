@@ -53,7 +53,7 @@ knex.schema.hasTable('address_tb').then(function(exists) { // Creates the table 
       table.increments('address_id'); // Creates 'id' column on table
       table.string('address_name');
       table.string('address');
-      table.string('user_id_ref');
+      table.integer('user_id_ref');
       table.decimal('long', 9, 6);
       table.decimal('lat', 9, 6);
     });
@@ -151,22 +151,30 @@ app.post("/user/update", function(req, res) {
 
 //Delete User
 app.post("/user/delete", function(req, res) knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
-  res.status(200).send('Succesfully Deleted Entry in Users Table');
+  res.status(200).send("Succesfully Deleted Entry in Users Table");
 })
 });
 
 // Returns a JSON list of a single userIdRef
 app.get("/user/:username", function(req, res) {
-  var table = knex.select().table('users_tb')
+  var table = knex.select().table("users_tb").where(req.params.username, "user_name")
   res.json(table.rows)
 });
 
 // Returns a JSON list of all users
-app.get("/user_tb", function(req, res) {
-  var table = knex.select().table('users_tb')
-  res.json(table.rows)
+app.get("/users_tb", function(req, res) {
+  knex.select().table("users_tb").then(function(table) {
+    res.json(table.rows)
+  })
 });
 
+// Returns a JSON list of all the addresses of the specified users
+app.get("/:username/poi", functon(req, res) {
+  var table = knex.select('users_tb.user_name', 'address_tb.address_name').innerJoin(
+    (knex.select('user_name', 'user_id').from('users_tb').where(req.params.username, 'users_tb.user_name')) names,
+    "names.user_id", "address_tb.user_id_ref")
+  res.json(table.rows)
+});
 
 // Listen on port
 app.listen(process.env.PORT || port, function() {
