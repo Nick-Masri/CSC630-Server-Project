@@ -5,7 +5,7 @@ Dependencies
 - Node JS
 - Postgresql
 
-## Getting Started
+## Installations/Dependencies
 
 In order to execute the program, you'll need to install node. In the shell, run
 ```
