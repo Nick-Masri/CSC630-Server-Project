@@ -163,7 +163,7 @@ app.get("/user/:username", function(req, res) {
 });
 
 // Returns a JSON list of all users
-app.get("/user_tb", function(req, res) {
+app.get("/users_tb", function(req, res) {
   var table = knex.select().table('users_tb')
   res.json(table.rows)
 });
