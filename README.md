@@ -57,7 +57,7 @@ To assign users addresses, execute the following command, again adapting the par
 curl --header "Content-Type: application/json" \
     --request POST \
     --data '{"address":"18 Old Campus Road", "address_name:"Dorm", "user_id_ref":2, "long":2, "lat":2}' \
-    http://localhost:8888/address_tb
+    http://localhost:8888/address/create
 ```
 
 ### PUTTING
@@ -68,7 +68,7 @@ To update a user entry (rather than creating one), follow the example code below
 curl --header "Content-Type: application/json" \
     --request POST \
     --data '{"user_id":2, "displayName":"John Doe","userName":"johndoe88", "long": 2, "lat": 2}' \
-    http://localhost:8888/user/create
+    http://localhost:8888/user/update
 ```
 
 To update an address entry, follow the example code below.
