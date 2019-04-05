@@ -47,30 +47,30 @@ async function connect() {
 
 ////////////////////////////////////////////////////// Database Setup ////////////////////////////////////////////////////
 knex.schema.hasTable('address_tb').then(function(exists) { // Creates the table if it doesn't exists
-  if (!exists) {
-    return knex.schema.createTable('address_tb', function(table) {
-      console.log("created address table");
-      table.increments('address_id'); // Creates 'id' column on table
-      table.string('address_name');
-      table.string('address');
-      table.string('user_id_ref');
-      table.string('long');
-      table.string('lat');
-    });
-  }
+if (!exists) {
+  return knex.schema.createTable('address_tb', function(table) {
+    console.log("created address table");
+    table.increments('address_id'); // Creates 'id' column on table
+    table.string('address_name');
+    table.string('address');
+    table.string('user_id_ref');
+    table.string('long');
+    table.string('lat');
+  });
+}
 });
 
 knex.schema.hasTable('users_tb').then(function(exists) { // Creates the table if it doesn't exists
-  if (!exists) {
-    return knex.schema.createTable('users_tb', function(table) {
-      console.log("Created user table");
-      table.increments('user_id'); // Creates 'id' column on table
-      table.string('display_name');
-      table.string('user_name');
-      table.string('long');
-      table.string('lat');
-    });
-  }
+if (!exists) {
+  return knex.schema.createTable('users_tb', function(table) {
+    console.log("Created user table");
+    table.increments('user_id'); // Creates 'id' column on table
+    table.string('display_name');
+    table.string('user_name');
+    table.string('long');
+    table.string('lat');
+  });
+}
 });
 ////////////////////////////////////////////////////// Routing ////////////////////////////////////////////////////
 
@@ -150,8 +150,10 @@ app.post("/user/update", function(req, res) {
 });
 
 //Delete User
-app.post("/user/delete", function(req, res) knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
-  res.status(200).send('Succesfully Deleted Entry in Users Table');
+app.post("/user/delete", function(req, res) {
+  knex('users_tb').where("user_id", "=", req.body.userId).del().then(function() {
+    res.status(200).send('Succesfully Deleted Entry in Users Table');
+  }
 });
 
 // Returns a JSON list of a single userIdRef
