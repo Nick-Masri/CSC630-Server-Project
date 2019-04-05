@@ -74,14 +74,7 @@ app.get('/', function(req, res) {
   res.send('<p>Welcome to the homepage for project 1. [Insert links to DB]</p>')
 })
 
-app.get('/:name/poi', function(req, res) {
-  res.send('This should send a JSON list of all the users locations')
-})
-
-
 //////////////// Addresses ////////////////
-// Create request for address table
-
 // Allow Creation of Addresses
 app.post("/address/create", function(req, res) {
   geocoder.geocode(req.body.address, function(err, result) {
@@ -106,43 +99,44 @@ app.post("/address/create", function(req, res) {
   });
 });
 
+// Update address
+app.post("/address/update", function(req, res) {
+  geocoder.geocode(req.body.address, function(err, result) {
+      knex('address_tb').where("address_id", "=", req.body.addressID).update([{
+          address: req.body.address
+        },
+        {
+          lat: result[0]['latitude']
+        },
+        {
+          long: result[0]['longitude']
+        },
+        {
+          user_id_ref: req.body.userIdRef
+        },
+        {
+          address_name: req.body.addressName
+        }
+      }]).then(function() {
+      res.status(200).send('Succesfully Updated Entry in Addresses Table');
+    })
+  });
+});
 
-//
-// //Update address
-// app.post("/address/update", function(req, res) {
-//   geocoder.geocode(req.body.address, function(err, result) {
-//     client.query(
-//       `UPDATE Addresses
-//       SET AddressTitle = '${req.body.addressTitle}', Address = '${req.body.address}', Lat = ${result[0].latitude}, Long = ${result[0].longitude}, UserID = ${req.body.userID}
-//       WHERE AddressID = ${req.body.addressID};`,
-//       function(err, result) {
-//         console.log("Updated Address");
-//         res.sendStatus(200);
-//       });
-//   });
-// });
-//
-// //Delete address
-// app.post("/address/delete", function(req, res) {
-//   client.query(`DELETE FROM Addresses WHERE AddressID=${req.body.addressID}`, function(err, result) {
-//     console.log("Deleted Address");
-//     res.sendStatus(200);
-//   });
-// });
-//
-// // Returns a JSON list of all the user’s locations.
-// app.get("/:username/poi", function(req, res) {
-//   client.query(`SELECT AddressTitle,Address,Addresses.Lat,Addresses.Long FROM Users JOIN Addresses ON Users.UserID=Addresses.UserID WHERE Users.UserName='${req.params.username}'`, function(err, result) {
-//     res.json(result.rows);
-//   });
-// });
-//
-// // Returns a JSON list of all addresses
-// app.get("/addresses", function(req, res) {
-//   client.query("SELECT * FROM Addresses", function(err, result) {
-//     res.json(result.rows);
-//   });
-// });
+//Delete address
+app.post("/address/delete", function(req, res) {
+  knex('address_tb').where("address_id", "=", req.body.addressID).del().then(function() {
+    res.status(200).send('Succesfully Deleted Entry in Addresses Table');
+  })
+});
+
+// Returns a JSON list of all addresses
+app.get("/addresses", function(req, res) {
+  knex.select().table('address_tb').then(function() {
+    res.json(result.rows);
+  })
+});
+
 //
 // // ** CRUD Users **
 //
