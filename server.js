@@ -164,8 +164,6 @@ app.get("/user/:username", function(req, res) {
 
 // Returns a JSON list of all users
 app.get("/users_tb", function(req, res) {
-  <<
-  << << < HEAD
   knex.select().table("users_tb").then(function(table) {
     res.json(table.rows)
   })
