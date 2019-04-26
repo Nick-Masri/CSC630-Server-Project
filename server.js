@@ -126,17 +126,7 @@ app.get("/address_tb", function(req, res) {
 
 //////////////// Users ////////////////
 
-// Allow Creation of Users
-app.post("/user/create", function(req, res) {
-  knex("users_tb").insert({
-    display_name: req.body.displayName,
-    user_name: req.body.userName,
-    long: req.body.long,
-    lat: req.body.lat
-  }).then(function() {
-    res.status(200).send("Succesfully Created Entry in Users Table");
-  })
-});
+
 
 // Update User
 app.post("/user/update", function(req, res) {
@@ -164,8 +154,6 @@ app.get("/user/:username", function(req, res) {
 });
 
 // Returns a JSON list of all users
-console.log(knex.select().table("users_tb"));
-
 app.get("/users_tb", function(req, res) {
   knex.select().table("users_tb").then(function(table) {
     res.json(table.rows)
